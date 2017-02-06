@@ -4,10 +4,13 @@ import java.io.FileReader;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class EverLabUtils {
+	private static final Logger logger = LoggerFactory.getLogger("EverLab_Log");
 	private static String version;
 	
 	public EverLabUtils(){}
@@ -24,12 +27,27 @@ public class EverLabUtils {
 			
 			if(sysconfigJson.get("Version") != null){
 				this.version = (String)sysconfigJson.get("Version");
-				System.out.println("EverLabBack Version: " + "=====" + version + "=====");
+				logger.info("=====" + version + "=====");
 			}
 			
 		}catch(Exception ex){
 			
 		}
+	}
+	
+	public static void writeLog(int severity, String msg){
+		switch(severity){
+		case 0:
+			logger.info(msg);
+			break;
+		case 1:
+			logger.warn(msg);
+			break;
+		case 2:
+			logger.error(msg);
+			break;
+		}
+			
 	}
 	
 	

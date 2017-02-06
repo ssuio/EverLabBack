@@ -3,34 +3,47 @@
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.everlab.EverLabUtils;
 import com.everlab.domain.User;
 import com.everlab.model.UserDAO;
+import com.everlab.response.Response;
 import com.everlab.test.HelloWorld;
 
 @RestController
 public class UserController {
 	User user = new User();
 	
-	@RequestMapping("/create")
-	public String create(String email, String pwd){
-		String userId = "";
+	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
+	public Response create(String email, String pwd, String country, String name){
 		try{
-			User user = new User(email, pwd);
-			userDao.save(user);
-			userId = String.valueOf(user.getId());
+			User user = userDao.findByEmail(email);
+			if(user == null){
+				user = new User(email, pwd);
+				
+				if(country != null && country != "")
+					user.setCountry(country);
+				if(name != null && name != "")
+					user.setName(name);
+				
+				
+				userDao.save(user);
+			}else{
+				
+			}
 		}catch(Exception ex){
-			return "Error creating the user: " + ex.toString();
+			EverLabUtils.writeLog(2, "Register user error :" + ex);
+			return new Response("error");
 		}
-		return "User succesfully create with id = " + userId;
+		return new Response("success");
 	}
 	
 	@RequestMapping(value = "/check", method = RequestMethod.GET, produces = "application/json")
@@ -85,10 +98,10 @@ public class UserController {
 	  }
 	
 	@RequestMapping("/hello")
-	  public String sayHello() {
+	  public String sayHello(HttpServletRequest request) {
 		 ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
 	     HelloWorld obj = (HelloWorld) context.getBean("helloWorld");
-	    return obj.getMessage();
+	    return obj.getMessage() + request.getRemoteAddr();
 	  }
 	
 	@RequestMapping(value = "/{name}", method = RequestMethod.GET, produces = "application/json")
