@@ -18,10 +18,10 @@ public class UserController {
 	User user = new User();
 	
 	@RequestMapping("/create")
-	public String create(String email, String name){
+	public String create(String email, String pwd){
 		String userId = "";
 		try{
-			User user = new User(email, name);
+			User user = new User(email, pwd);
 			userDao.save(user);
 			userId = String.valueOf(user.getId());
 		}catch(Exception ex){
@@ -32,7 +32,6 @@ public class UserController {
 	
 	@RequestMapping(value = "/check", method = RequestMethod.GET, produces = "application/json")
 	public Map isEmailValid(String email){
-		System.out.println("!!!!");
 		Map map = new HashMap();
 		User user = userDao.findByEmail(email);
 		if(user == null){
@@ -81,6 +80,7 @@ public class UserController {
 	    }
 	    return "User succesfully updated!";
 	  }
+	
 	@RequestMapping("/hello")
 	  public String sayHello() {
 	    return "Gradle works!";
