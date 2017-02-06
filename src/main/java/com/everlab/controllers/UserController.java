@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.everlab.domain.User;
 import com.everlab.model.UserDAO;
+import com.everlab.test.HelloWorld;
 
 @RestController
 public class UserController {
@@ -83,10 +86,11 @@ public class UserController {
 	
 	@RequestMapping("/hello")
 	  public String sayHello() {
-	    return "Gradle works!";
+		 ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+	     HelloWorld obj = (HelloWorld) context.getBean("helloWorld");
+	    return obj.getMessage();
 	  }
 	
-	@CrossOrigin
 	@RequestMapping(value = "/{name}", method = RequestMethod.GET, produces = "application/json")
 	public User createJSONEmailByUser(@PathVariable String name){
 		user.setName(name);
