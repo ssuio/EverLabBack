@@ -9,6 +9,14 @@ public class Response {
 	private String status;
 	private String msg; 
 	
+	public Response(){}
+	
+	public Response(String status, String msg){
+		this.status = status;
+		this.msg = msg;
+		
+	}
+	
 	public String getMsg() {
 		return msg;
 	}

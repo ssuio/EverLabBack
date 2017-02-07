@@ -38,31 +38,19 @@ public class UserController {
 				if(name != null && name != "")
 					user.setName(name);
 				
-				
 				userDao.save(user);
+				return new Response("success");
 			}else{
-				
+				EverLabUtils.writeLog(2, "User already exist.");
+				return new Response("error", "User exist!");
 			}
 		}catch(Exception ex){
 			EverLabUtils.writeLog(2, "Register user error :" + ex);
-			return new Response("error");
+			return new Response("error", ex.toString());
 		}
-		return new Response("success");
 	}
 	
-	@RequestMapping(value = "/check", method = RequestMethod.GET, produces = "application/json")
-	public Map isEmailValid(String email){
-		Map map = new HashMap();
-		User user = userDao.findByEmail(email);
-		if(user == null){
-			map.put("isEmailValid", true);
-		}else{
-			map.put("isEmailValid", false);
-		}
-		return map;
-	}
-	
-	@RequestMapping("/delete")
+	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
 	  public String delete(long id) {
 	    try {
 	      User user = new User(id);
@@ -74,25 +62,16 @@ public class UserController {
 	    return "User succesfully deleted!";
 	  }
 	
-	@RequestMapping("/get-by-email")
-	  public String getByEmail(String email) {
-	    String userId = "";
+	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json")
+	  public String updateUser(long id, String email, String name, String country, String age) {
 	    try {
 	      User user = userDao.findByEmail(email);
-	      userId = String.valueOf(user.getId());
-	    }
-	    catch (Exception ex) {
-	      return "User not found";
-	    }
-	    return "The user id is: " + userId;
-	  }
-	
-	@RequestMapping("/update")
-	  public String updateUser(long id, String email, String name) {
-	    try {
-	      User user = userDao.findOne(id);
-	      user.setEmail(email);
-	      user.setName(name);
+	      if(name != null && name != "")
+	    	  user.setName(name);
+	      if(country != null && country != "")
+	    	  user.setCountry(country);
+	      if(age != null && age != "")
+	    	  user.setAge(age);
 	      userDao.save(user);
 	    }
 	    catch (Exception ex) {
