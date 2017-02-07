@@ -6,12 +6,14 @@ import java.util.Map;
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.everlab.EverLabConfiguration;
 import com.everlab.EverLabUtils;
 import com.everlab.domain.User;
 import com.everlab.model.UserDAO;
@@ -20,6 +22,8 @@ import com.everlab.test.HelloWorld;
 
 @RestController
 public class UserController {
+	@Autowired
+	private UserDAO userDao;
 	User user = new User();
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
@@ -99,9 +103,9 @@ public class UserController {
 	
 	@RequestMapping("/hello")
 	  public String sayHello(HttpServletRequest request) {
-		 ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-	     HelloWorld obj = (HelloWorld) context.getBean("helloWorld");
-	    return obj.getMessage() + request.getRemoteAddr();
+		ApplicationContext ctx = new AnnotationConfigApplicationContext(EverLabConfiguration.class);
+		HelloWorld hello = (HelloWorld)ctx.getBean(HelloWorld.class);
+	    return hello.getMessage() + request.getRemoteAddr();
 	  }
 	
 	@RequestMapping(value = "/{name}", method = RequestMethod.GET, produces = "application/json")
@@ -112,6 +116,5 @@ public class UserController {
 		return user;
 	}
 	
-	@Autowired
-	  private UserDAO userDao;
+	
 }

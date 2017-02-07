@@ -2,6 +2,8 @@ package com.everlab;
 
 import java.io.FileReader;
 
+import javax.annotation.PostConstruct;
+
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.slf4j.Logger;
@@ -13,12 +15,15 @@ public class EverLabUtils {
 	private static final Logger logger = LoggerFactory.getLogger("EverLab_Log");
 	private static String version;
 	
-	public EverLabUtils(){}
+	public EverLabUtils(){
+		//this.writeLog(0, "EverLabUtils construct!");
+	}
 
 	public String getVersion(){
 		return version;
 	}
 	
+	@PostConstruct
 	public void init(){
 		JSONParser parser = new JSONParser();
 		try{

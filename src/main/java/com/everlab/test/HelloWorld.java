@@ -11,4 +11,12 @@ public class HelloWorld {
 	      System.out.println("Your Message : " + message);
 	      return this.message;
 	   }
+	   
+	   public void init(){
+		   System.out.println("Hello world init!");
+	   }
+	   
+	   public void destroy(){
+		   System.out.println("Hello world destroy!");
+	   }
 }
