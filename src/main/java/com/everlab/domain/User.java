@@ -1,11 +1,11 @@
 package com.everlab.domain;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
 
@@ -18,7 +18,7 @@ public class User extends Person{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	@NotNull
+	@Column(name = "email", unique = true, nullable = false)
 	private String email;
 	
 	private String country;
@@ -36,6 +36,10 @@ public class User extends Person{
 
 	public User(long id){
 		this.id = id;
+	}
+	
+	public User(String email){
+		this.email = email;
 	}
 	
 	public User(String email, String pwd){

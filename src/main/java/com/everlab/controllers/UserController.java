@@ -39,27 +39,28 @@ public class UserController {
 					user.setName(name);
 				
 				userDao.save(user);
-				return new Response("success");
+				return new Response(Response.RESPONSE_SUCCESS);
 			}else{
 				EverLabUtils.writeLog(2, "User already exist.");
 				return new Response("error", "User exist!");
 			}
 		}catch(Exception ex){
 			EverLabUtils.writeLog(2, "Register user error :" + ex);
-			return new Response("error", ex.toString());
+			return new Response(Response.RESPONSE_ERROR, ex.toString());
 		}
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.POST, produces = "application/json")
-	  public String delete(long id) {
+	  public Response delete(String email) {
 	    try {
-	      User user = new User(id);
-	      userDao.delete(user);
+//	      User user = new User(email);
+//	      userDao.delete(user);
+	      
+	      return new Response(Response.RESPONSE_SUCCESS);
 	    }
 	    catch (Exception ex) {
-	      return "Error deleting the user:" + ex.toString();
+	      return new Response(Response.RESPONSE_ERROR, ex.toString());
 	    }
-	    return "User succesfully deleted!";
 	  }
 	
 	@RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json")

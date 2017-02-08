@@ -7,7 +7,10 @@ import javax.persistence.Table;
 public class Response {
 	
 	private String status;
-	private String msg; 
+	private String msg = ""; 
+	
+	public static final String RESPONSE_SUCCESS = "success";
+	public static final String RESPONSE_ERROR = "success";
 	
 	public Response(){}
 	
