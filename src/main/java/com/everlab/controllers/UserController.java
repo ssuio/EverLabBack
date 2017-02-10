@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.everlab.EverLabConfiguration;
 import com.everlab.EverLabUtils;
+import com.everlab.dao.UserDAO;
 import com.everlab.domain.User;
-import com.everlab.model.UserDAO;
 import com.everlab.response.Response;
 import com.everlab.test.HelloWorld;
 

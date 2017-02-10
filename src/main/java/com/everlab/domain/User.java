@@ -1,18 +1,22 @@
 package com.everlab.domain;
 
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
-import javax.xml.bind.annotation.XmlRootElement;
+import javax.persistence.Transient;
 
 
 @Entity
-@Table(name = "users")
-@XmlRootElement(name = "User")
-public class User extends Person{
+@Table(name = "user")
+public class User{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,7 +27,20 @@ public class User extends Person{
 	
 	private String country;
 	private String age;
-	
+	private String name;
+	private String pwd;
+	private String rePwd;
+	private Set<Role> roles;
+
+	@Transient
+	public String getRePwd() {
+		return rePwd;
+	}
+
+	public void setRePwd(String rePwd) {
+		this.rePwd = rePwd;
+	}
+
 	public long getId() {
 		return id;
 	}
@@ -64,6 +81,32 @@ public class User extends Person{
 	}
 	public void setAge(String age) {
 		this.age = age;
+	}
+	
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPwd() {
+		return pwd;
+	}
+	public void setPwd(String pwd) {
+		this.pwd = pwd;
+	}
+	
+	
+	
+	@ManyToMany
+	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), 
+	inverseJoinColumns = @JoinColumn(name = "role_id"))
+	public Set<Role> getRoles(){
+		return roles;
+	}
+	
+	public void setRoles(Set<Role> roles){
+		this.roles = roles;
 	}
 	
 }

@@ -1,4 +1,4 @@
-package com.everlab.model;
+package com.everlab.dao;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

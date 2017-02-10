@@ -52,8 +52,8 @@ public class EverLabUtils {
 			logger.error(msg);
 			break;
 		}
-			
 	}
-	
-	
 }
+	
+	
+	

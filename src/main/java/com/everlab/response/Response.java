@@ -10,14 +10,13 @@ public class Response {
 	private String msg = ""; 
 	
 	public static final String RESPONSE_SUCCESS = "success";
-	public static final String RESPONSE_ERROR = "success";
+	public static final String RESPONSE_ERROR = "error";
 	
 	public Response(){}
 	
 	public Response(String status, String msg){
 		this.status = status;
 		this.msg = msg;
-		
 	}
 	
 	public String getMsg() {

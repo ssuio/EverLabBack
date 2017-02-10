@@ -1,4 +1,4 @@
-package com.everlab.model;
+package com.everlab.dao;
 
 public class LabDiaryDAO {
 	
