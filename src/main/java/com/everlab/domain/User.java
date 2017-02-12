@@ -30,7 +30,6 @@ public class User{
 	private String name;
 	private String pwd;
 	private String rePwd;
-	private Set<Role> roles;
 
 	@Transient
 	public String getRePwd() {
@@ -96,17 +95,5 @@ public class User{
 		this.pwd = pwd;
 	}
 	
-	
-	
-	@ManyToMany
-	@JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), 
-	inverseJoinColumns = @JoinColumn(name = "role_id"))
-	public Set<Role> getRoles(){
-		return roles;
-	}
-	
-	public void setRoles(Set<Role> roles){
-		this.roles = roles;
-	}
 	
 }

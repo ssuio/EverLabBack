@@ -1,14 +1,16 @@
 		package com.everlab.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +27,44 @@ public class UserController {
 	@Autowired
 	private UserDAO userDao;
 	User user = new User();
+//	
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	public String loginPage(){
+		String loginPage = "";
+		try {
+			InputStreamReader inR = new FileReader(new File("webApp/views/index.html"));
+			BufferedReader bfR = new BufferedReader(inR);
+			String line = bfR.readLine();
+			while(line != null){
+				loginPage+= line;
+				line = bfR.readLine();
+			}
+			return loginPage;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return loginPage;
+	}
+//	
+	@RequestMapping(value = "/error", method = RequestMethod.GET, produces = "text/html")
+	public String errorPage(){
+		String errorPage = "";
+		try {
+			InputStreamReader inR = new FileReader(new File("views/error.html"));
+			BufferedReader bfR = new BufferedReader(inR);
+			String line = bfR.readLine();
+			while(line != null){
+				errorPage+= line;
+				line = bfR.readLine();
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return errorPage;
+	}
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST, produces = "application/json")
 	public Response create(String email, String pwd, String country, String name){
@@ -88,13 +128,12 @@ public class UserController {
 	    return hello.getMessage() + request.getRemoteAddr();
 	  }
 	
-	@RequestMapping(value = "/{name}", method = RequestMethod.GET, produces = "application/json")
-	public User createJSONEmailByUser(@PathVariable String name){
-		user.setName(name);
-		user.setEmail(name+"@everlab.com");
+	@RequestMapping(value = "/auth", method = RequestMethod.GET, produces = "application/json")
+	public String createJSONEmailByUser(String name){
+//		user.setName(name);
+//		user.setEmail(name+"@everlab.com");
 		
-		return user;
+		return new Response(Response.RESPONSE_SUCCESS, "test").toString();
 	}
-	
 	
 }

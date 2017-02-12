@@ -15,6 +15,4 @@ public interface UserDAO extends CrudRepository<User, Long>{
 //		@Transactional
 //		@Query(value="delete from User where email = ?1")
 //		void deleteByEmail(String emailAddress);
-		@Transactional
-		Integer deleteByEmailAddress(String emailAddress);
 }
