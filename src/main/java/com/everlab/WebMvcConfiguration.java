@@ -19,6 +19,7 @@ public class WebMvcConfiguration extends WebMvcConfigurerAdapter {
     public void addResourceHandlers(ResourceHandlerRegistry  registry) {
 //    	registry.addResourceHandler("/index.html").addResourceLocations("file:views/");
     	registry.addResourceHandler("/**/*.map","/**/*.js","/**/*.css").addResourceLocations("file:webApp/views/");
+    	registry.addResourceHandler("/").addResourceLocations("file:webApp/views/index.html");
     	registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
     }
 }
