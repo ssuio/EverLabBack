@@ -1,6 +1,20 @@
 <div class="row">
-  <div class="col-1-4">
+  <div class="col-sm-3">
   		{{title}}
+  		<alert type="success">hello</alert>
   </div>
-  <div class="col-1-8">.col-sm-8</div>
+  <div class="col-sm-9">.col-sm-8</div>
 </div>
+<div [(ngModel)]="model" ngbRadioGroup name="radioBasic">
+  <label class="btn btn-primary">
+    <input type="radio" [value]="1"> Left (pre-checked)
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" value="middle"> Middle
+  </label>
+  <label class="btn btn-primary">
+    <input type="radio" [value]="false"> Right
+  </label>
+</div>
+<hr>
+<pre>{{model}}</pre>
