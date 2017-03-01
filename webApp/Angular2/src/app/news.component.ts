@@ -1,6 +1,6 @@
 import { Component } from '@angular/core'
-import { NEWSLIST } from './newsList'
-import { news } from './news'
+import { NEWSLIST } from './welcomeDomain/newsList'
+import { news } from './welcomeDomain/news'
 
 @Component({
 	selector:'el-news',

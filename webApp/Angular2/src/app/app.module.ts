@@ -3,34 +3,52 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { AlertModule } from 'ng2-bootstrap/ng2-bootstrap';
+import { RouterModule } from '@angular/router';
 
+import { ELAppComponent } from './everlab-app.component';
 
 import { WelcomeComponent } from './welcome.component';
 import { ELHeaderComponent } from './el-header.component';
 import { ELFooterComponent } from './el-footer.component';
 import { ELNewsComponent } from './news.component';
 
+import { ELBookComponent } from './el-book.component';
+
+
 @NgModule({
   declarations: [
+    ELAppComponent,
     WelcomeComponent,
     ELHeaderComponent,
     ELFooterComponent,
-    ELNewsComponent
+    ELNewsComponent,
+    ELBookComponent,
+    
   ],
   imports: [
     BrowserModule,
     FormsModule,
     HttpModule,
     NgbModule.forRoot(),
-    AlertModule.forRoot()
+    RouterModule.forRoot([
+      {
+        path: 'welcome',
+        component: WelcomeComponent
+      },
+      {
+        path: 'elbook',
+        component: ELBookComponent
+      },
+      {
+        path: '',
+        redirectTo: '/welcome',
+        pathMatch: 'full'
+      },
+      ])
   ],
   providers: [],
   bootstrap: [
-    WelcomeComponent,
-    ELHeaderComponent,
-    ELFooterComponent,
-    ELNewsComponent
+   ELAppComponent
   ]
 })
 export class AppModule { }
